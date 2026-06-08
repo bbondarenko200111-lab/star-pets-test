@@ -58,16 +58,11 @@ test.describe('API тесты (jsonplaceholder)', () => {
     // ⚠️ В реальном бэкенде StarPets: 422 Unprocessable Entity
   });
 
-  test('Негатив: без авторизации (401/403)', async ({ request }) => {
-    // jsonplaceholder не требует авторизации, но демонстрируем подход
-    const response = await request.post(`${BASE_URL}/posts`, {
-      data: { title: 'foo' },
-      // без заголовка Authorization
-    });
-    // ⚠️ В реальном API StarPets должен быть 401 или 403
-    expect(response.status()).not.toBe(401); // просто заглушка
-    console.log('⚠️ Для StarPets: добавить заголовок Authorization и ожидать 401');
-  });
+  test('API без токена 401', async ({ request }) => {
+    const response = await request.post(`https://users.apineural.com/api/user/profile`);
+    
+    expect(401).toContain(response.status())
+   });
 
   test('Идемпотентность: 3 одинаковых POST с одним X-Idempotency-Key', async ({ request }) => {
     const idempotencyKey = uniqueIdempotencyKey;
