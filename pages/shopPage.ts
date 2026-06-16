@@ -25,4 +25,8 @@ export class ShopPage {
   async waitForWithdrawButton(timeout = 15000) {
     await this.withdrawButton.waitFor({ state: 'visible', timeout });
   }
+
+  async getPriceText() {
+    return this.priceLabel.textContent();
+  }
 }
